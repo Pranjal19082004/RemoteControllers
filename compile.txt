@@ -1,0 +1,2 @@
+ g++ serverPc.cpp ServerNetworking.cpp  -o pc.exe -mwindows -municode -lws2_32
+  g++ clientPc.cpp mouseEvents.cpp -o clientpc -lws2_32
