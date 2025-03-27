@@ -2,5 +2,7 @@
   "files.associations": {
     "iostream": "cpp",
     "system_error": "cpp"
-  }
+  },
+  "editor.tabSize": 8,
+  "editor.insertSpaces": false
 }

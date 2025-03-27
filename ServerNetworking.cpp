@@ -5,7 +5,6 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <string>
-#pragma comment(lib, "ws2_32.lib")
 using namespace std;
 #define PORT "3490"
 #define BACKLOG 10
@@ -20,32 +19,27 @@ SOCKET find_a_listener()
     hints.ai_socktype = SOCK_STREAM;
     if ((getaddrinfo(NULL, PORT, &hints, &ServerAddrInfoLinkList)) != 0)
     {
-        perror("getaddrinfo()\n");
         return INVALID_SOCKET;
     }
     for (p = ServerAddrInfoLinkList; p != NULL; p = p->ai_next)
     {
         if ((serverFd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == INVALID_SOCKET)
         {
-            perror("socket()\n");
             continue;
         }
         if (setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR, (char *)(&yes), sizeof(int)) == SOCKET_ERROR)
         {
-            perror("setsockopt\n");
             closesocket(serverFd);
             continue;
         }
         if ((bind(serverFd, p->ai_addr, p->ai_addrlen)) == SOCKET_ERROR)
         {
             closesocket(serverFd);
-            perror("bind()\n");
             continue;
         }
         if (listen(serverFd, BACKLOG) == SOCKET_ERROR)
         {
             closesocket(serverFd);
-            perror("lsiten()");
             continue;
         }
         break;
@@ -53,7 +47,6 @@ SOCKET find_a_listener()
     freeaddrinfo(ServerAddrInfoLinkList);
     if (p == NULL)
     {
-        perror("cant find a listener on which we can listen : \n");
         return INVALID_SOCKET;
     }
     return serverFd;

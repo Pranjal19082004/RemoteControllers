@@ -28,7 +28,7 @@ void mouseRightClick(UINT16 x, UINT16 y)
 void rightDoubleClick(UINT16 x, UINT16 y)
 {
     SetCursorPos(x, y);
-    INPUT inputArray[4] = {0};
+    INPUT inputArray[2] = {0};
 
     inputArray[0].type = INPUT_MOUSE;
     inputArray[0].mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
@@ -36,15 +36,22 @@ void rightDoubleClick(UINT16 x, UINT16 y)
     inputArray[1].type = INPUT_MOUSE;
     inputArray[1].mi.dwFlags = MOUSEEVENTF_RIGHTUP;
 
-    inputArray[2].type = INPUT_MOUSE;
-    inputArray[2].mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
-
-    inputArray[3].type = INPUT_MOUSE;
-    inputArray[3].mi.dwFlags = MOUSEEVENTF_RIGHTUP;
-
-    SendInput(4, inputArray, sizeof(INPUT));
+    SendInput(2, inputArray, sizeof(INPUT));
+    Sleep(10);
+    SendInput(2, inputArray, sizeof(INPUT));
 }
-
+void leftDoubleClick(UINT16 x, UINT16 y)
+{
+    SetCursorPos(x, y);
+    INPUT inputArray[2] = {0};
+    inputArray[0].type = INPUT_MOUSE;
+    inputArray[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+    inputArray[1].type = INPUT_MOUSE;
+    inputArray[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+    SendInput(2, inputArray, sizeof(INPUT));
+    Sleep(10);
+    SendInput(2, inputArray, sizeof(INPUT));
+}
 void holdLeft(UINT16 x, UINT16 y)
 {
     SetCursorPos(x, y);

@@ -9,18 +9,10 @@
 #include <ws2tcpip.h>
 #include <windows.h>
 #include <string>
-#pragma comment(lib, "ws2_32.lib")
 using namespace std;
 SOCKET nfd;
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void logMessage(const std::string &message)
-{
-    std::ofstream logFile("log.txt", std::ios::app);
-    if (logFile)
-    {
-        logFile << message << std::endl;
-    }
-}
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
 
@@ -158,7 +150,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
-        // All painting occurs here, between BeginPaint and EndPaint.
         FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
         EndPaint(hwnd, &ps);
         break;
@@ -174,18 +165,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     messageToSend[2] = (((pt.x) >> 8) & (0xff));
     messageToSend[3] = ((pt.y) & (0xFF));
     messageToSend[4] = (((pt.y) >> 8) & (0xff));
-
-    // messageToSend[1] = (0 & 0xFF);
-    // messageToSend[2] = ((0 >> 8) & (0xff));
-    // messageToSend[3] = (0 & 0xFF);
-    // messageToSend[4] = ((0 >> 8) & (0xff));
-
-    std::string s = "move to: ";
-    s += to_string(LOWORD(lParam));
-    s += " ";
-    s += to_string(HIWORD(lParam));
-    s += "\n";
-    logMessage(s);
     send(nfd, messageToSend, 10, 0);
 
     return 0;
