@@ -1,0 +1,11 @@
+so we all know (i hope we all know ) that we can only send characters on sockets in cpp so then how should we send integers or even whole structure on it if we need to ......
+well first one is easy if integer is less than 256 than we can convert it directly convert it into unsigned char of corresponding ascii value and send it over and then convert it back into integer but we can only send number less 256 and greater than or equal to zero ..   
+now what if we need to send number greater than or equal to 256 then what can we do ?
+well than is also easy we just need to break them into two pieces first one contain first 8 bits and second contain next 8 bits 
+like this we can send number less than equal to 2^15-1 . but we have to unwrap it in same way .....
+now what if we want to send a whole structure on a socket then what we will do ?
+well till now what i was doing was first i will send length of whole message .... then i will send length of first value to the  first key in the structure next i will send the value of the first key and so on .... but problem with this solution is that i have to uniquely code packing and unpacking function which is unique to that one structure but what if i want to change structure or what if i want to use this function somewhere else then what can we do ... so should we code again and again a unique function for every different structure we need to send in our project well that is not a proper solution so what can we do ...
+we can define a rule lets say or something like syntax such that we can send whole structure as a large string .
+rule can be like start and end of the structure string will have a starting and ending symbols and then it will contain .
+and in that structure we will also send name of keys as part of string which too should be wrapped in a starting and ending symbols then we will give value to that key wrapped in starting and 
+
